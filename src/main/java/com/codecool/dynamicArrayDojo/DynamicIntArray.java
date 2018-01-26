@@ -5,15 +5,13 @@ public class DynamicIntArray {
 
     private int[] data;
     private int size = 0;
-    private int capacity = 2;
 
 
     public DynamicIntArray() {
-        data = new int[capacity];
+        data = new int[1];
     }
 
     public DynamicIntArray(int capacity) {
-        this.capacity = capacity;
         this.data = new int[capacity];
     }
 
@@ -46,6 +44,12 @@ public class DynamicIntArray {
     public void insert(int index, int value) {
 
         resizeIfFull();
+
+        if (index >= size) {
+            add(value);
+            return;
+        }
+
         for (int from = size - 1; from >= index; from--) {
             data[from + 1] = data[from];
         }
@@ -59,7 +63,7 @@ public class DynamicIntArray {
             throw new ArrayIndexOutOfBoundsException();
         }
         for (int from = index; from < size - 1; from++) {
-            data[from - 1] = data[from];
+            data[from] = data[from + 1];
         }
         size--;
     }
